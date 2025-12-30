@@ -1,29 +1,37 @@
 
+import { useState } from "react"
 import {client} from "../../../shared/api/client"
-import { useQuery } from "@tanstack/react-query"
+import { keepPreviousData, useQuery } from "@tanstack/react-query"
 
 
-export function Playlist() {
+export function Playlist({}) {
 
-    // const traks = async () => {
-    //     const response = await client.GET("/playlists")
-    //     const data = response.data
-    //     return data
-    // }
+    const [currentPage, setCurrentPage] = useState(1)
     const query = useQuery({
-    staleTime: 10000,
-    queryKey: ["playlists"],
-    queryFn: async () =>{
-        const response = await client.GET("/playlists")
+    queryKey: ["playlists",currentPage],
+    queryFn: async ({signal}) =>{
+        const response = await client.GET("/playlists", {
+            params: {
+                query:{
+                    pageNumber: currentPage
+                }
+            },
+            signal
+        })
         if (response.error) {
             throw (response as unknown as {error:Error}).error;
         }
         return response.data
-    }
+    },
+    placeholderData: keepPreviousData
     })
+
     if (query.isPending) {return (<span>Loading</span> )}
     if (query.isError) {return (<span>Error:{JSON.stringify(query.error.message)}</span> )}
-
+    if (query.data?.meta.page !== currentPage) {
+        setCurrentPage(query.data?.meta.page)
+    }
+    
 
     return (
         <div>
