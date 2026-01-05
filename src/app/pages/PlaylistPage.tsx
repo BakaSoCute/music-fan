@@ -1,4 +1,4 @@
-import { Playlist } from "./features/Playlist"
+import { Playlist } from "../../features/Playlist"
 
 export function PlaylistPage () {
   return(
