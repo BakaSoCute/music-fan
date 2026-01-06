@@ -5,8 +5,9 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query"
 
 type Props = {
     userId?: string
+    onPlaylistSelected?: (playlistId: string) => void
 }
-export function Playlists({userId}: Props) {
+export function Playlists({userId, onPlaylistSelected}: Props) {
 
     // const [currentPage, setCurrentPage] = useState(1)
     // const [search, setSearch ] = useState("")
@@ -34,7 +35,9 @@ export function Playlists({userId}: Props) {
     // if (query.data?.meta.page !== currentPage) {
     //     setCurrentPage(query.data?.meta.page)
     // }
-    
+    const hanldeSelectedPlaylistClick = (plailistId: string) => {
+        onPlaylistSelected?.(plailistId)
+    }
 
     return (
         <div>
@@ -42,7 +45,7 @@ export function Playlists({userId}: Props) {
         <ul>
             {query.data.data?.map((track) => {
             return (
-                <li key={track.id}>
+                <li key={track.id} onClick={() => {hanldeSelectedPlaylistClick(track.id)}}>
                 {track.attributes.title} <DeletePlaylist playlistId={track.id} />
                 </li>
             )
