@@ -11,7 +11,7 @@ export const useLoginMutation = () => {
                 code: code,
                 redirectUri: import.meta.env.VITE_CALLBACK_URL,
                 rememberMe: true,
-                accessTokenTTL: "10s"
+                accessTokenTTL: "1d"
             }
         })
         if (response.error) {

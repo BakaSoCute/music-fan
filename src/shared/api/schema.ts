@@ -676,6 +676,7 @@ export interface components {
             currentUserReaction: components["schemas"]["ReactionValue"];
         };
         PlaylistResource: {
+            filter(arg0: (p: { id: string; }) => boolean): unknown;
             /** @description Unique identifier of the playlist */
             id: string;
             /**

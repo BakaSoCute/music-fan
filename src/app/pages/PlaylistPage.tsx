@@ -1,9 +1,9 @@
-import { Playlist } from "../../features/Playlist"
+import { Playlists } from "../../widget/playlists/Playlists";
 
 export function PlaylistPage () {
   return(
     <>
-    <Playlist/>
+    <Playlists/>
     </>
   )
 }
