@@ -2,12 +2,14 @@
 import { DeletePlaylist } from "../../features/playlists/delete-playlist/ui/delete-playlist"
 import {client} from "../../shared/api/client"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
+import style from "../../app/style/playlist.module.css"
 
 type Props = {
     userId?: string
+    isMy?: string | undefined
     onPlaylistSelected?: (playlistId: string) => void
 }
-export function Playlists({userId, onPlaylistSelected}: Props) {
+export function Playlists({userId, isMy,onPlaylistSelected}: Props) {
 
     // const [currentPage, setCurrentPage] = useState(1)
     // const [search, setSearch ] = useState("")
@@ -35,18 +37,18 @@ export function Playlists({userId, onPlaylistSelected}: Props) {
     // if (query.data?.meta.page !== currentPage) {
     //     setCurrentPage(query.data?.meta.page)
     // }
-    const hanldeSelectedPlaylistClick = (plailistId: string) => {
+    const handleSelectedPlaylistClick = (plailistId: string) => {
         onPlaylistSelected?.(plailistId)
     }
 
     return (
         <div>
 
-        <ul>
+        <ul className={style.container}>
             {query.data.data?.map((track) => {
             return (
-                <li key={track.id} onClick={() => {hanldeSelectedPlaylistClick(track.id)}}>
-                {track.attributes.title} <DeletePlaylist playlistId={track.id} />
+                <li className={style.li} key={track.id} >
+                    <p onClick={() => {handleSelectedPlaylistClick(track.id)}}>{track.attributes.title} </p>{isMy &&<DeletePlaylist playlistId={track.id} />}
                 </li>
             )
             })}

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import type { SchemaCreatePlaylistRequestPayload } from "../../../../shared/api/schema"
 import { client } from "../../../../shared/api/client"
+import style from "../../../../app/style/playlist.module.css"
 
 export const AddPlaylystForm = () => {
 
@@ -18,7 +19,7 @@ export const AddPlaylystForm = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey:["playlists"],
-                refetchType: "all"
+                refetchType: "active"
             })
         }
     })
@@ -27,13 +28,13 @@ export const AddPlaylystForm = () => {
         mutate(data)
     }
 return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>Add new Playlist</h2>
+    <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+        <h2>Добавить новый плейлист</h2>
         <p>
-            <input {...register("title")}/>
+            Название<input {...register("title")}/>
         </p>
         <p>
-            <textarea{...register("description")}></textarea>
+            Описание<textarea{...register("description")}></textarea>
         </p>
         <button type="submit">Add playlist</button>
     </form>

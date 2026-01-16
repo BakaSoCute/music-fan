@@ -2,21 +2,27 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import type { SchemaUpdatePlaylistRequestPayload } from "../../../../shared/api/schema"
 import { client } from "../../../../shared/api/client"
+import { useEffect } from "react"
 
 type Props = {
     playlistId: string
 }
 
-export const EditPlaylystForm = ({playlistId}: Props) => {
+export const EditPlaylistForm = ({playlistId}: Props) => {
+    const {register,handleSubmit, reset} = useForm<SchemaUpdatePlaylistRequestPayload>()
     const {data, isPending, isError} = useQuery({
         queryKey: ["playlists", playlistId],
         queryFn: async () => {
-            const response = await client.GET("/playlists/{playlistId}",{params: {path:{playlistId}}})
+            const response = await client.GET("/playlists/{playlistId}",{params: {path:{playlistId:playlistId}}})
             return response.data
-        }
+        },
+        enabled: !!playlistId
     })
+    useEffect(() => {
+        reset()
+    },[playlistId])
 
-    const {register,handleSubmit} = useForm<SchemaUpdatePlaylistRequestPayload>()
+
     const queryClient = useQueryClient()
  
     const {mutate} = useMutation({
@@ -33,6 +39,7 @@ export const EditPlaylystForm = ({playlistId}: Props) => {
                 refetchType: "all"
             })
         }
+
     })
 
     const onSubmit = (data: SchemaUpdatePlaylistRequestPayload) => {

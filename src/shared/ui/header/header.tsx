@@ -13,6 +13,9 @@ export const Header = ({renderAccountBar}: Props) => (
                 <Link to="/">
                     Playlists
                 </Link>
+                <Link to="/my-tracks">
+                    Tracks
+                </Link>
             </div>
             <div>{renderAccountBar()}</div>
         </div>

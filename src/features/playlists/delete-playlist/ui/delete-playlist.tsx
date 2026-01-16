@@ -1,4 +1,5 @@
 import { useDeleteMutation } from "../api/useDeleteMutation"
+import style from "../../../../app/style/playlist.module.css"
 
 type Props = {
     playlistId: string
@@ -13,6 +14,6 @@ export const DeletePlaylist = ({playlistId}: Props) => {
         mutate()
     }
     return (
-        <button onClick={handleDelete}>Delete Playlist</button>
+        <button className={style.delete} onClick={handleDelete}>Delete</button>
     )
 }
